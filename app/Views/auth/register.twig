@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Criar conta - Nuvix</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Início</a>
+  </nav>
+
+  <main class="auth-container">
+    <h2>Criar sua conta Nuvix</h2>
+
+    {% if erro %}
+      <div class="error-message">{{ erro }}</div>
+    {% endif %}
+
+    <form method="POST" action="/register" onsubmit="return validarRegistro();">
+      <input type="email" name="email" placeholder="Seu email" required>
+      <input type="password" name="senha" placeholder="Sua senha" required>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p>Já tem conta? <a href="/login">Entrar</a></p>
+  </main>
+
+  <script>
+    function validarRegistro() {
+      const email = document.querySelector('[name="email"]').value.trim();
+      const senha = document.querySelector('[name="senha"]').value.trim();
+
+      if (!email.includes('@')) {
+        alert('Email inválido.');
+        return false;
+      }
+      if (senha.length < 6) {
+        alert('Senha deve ter no mínimo 6 caracteres.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

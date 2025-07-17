@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Nuvix</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Início</a>
+  </nav>
+
+  <main class="auth-container">
+
+    <h2>Entrar no Nuvix</h2>
+
+    {% if erro %}
+      <div class="error-message">{{ erro }}</div>
+    {% endif %}
+
+    <form method="POST" action="/login" onsubmit="return validarLogin();">
+      <input type="email" name="email" placeholder="Seu email" required>
+      <input type="password" name="senha" placeholder="Sua senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p>Não tem conta? <a href="/register">Crie aqui</a></p>
+  </main>
+
+  <script>
+    function validarLogin() {
+      const email = document.querySelector('[name="email"]').value.trim();
+      const senha = document.querySelector('[name="senha"]').value.trim();
+
+      if (!email.includes('@') || senha.length < 6) {
+        alert('Preencha corretamente o email e a senha.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

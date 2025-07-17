@@ -1,0 +1,13 @@
+{
+    "name": "estevao/projeto-microsass",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Estevao\\ProjetoMicrosass\\": "src/"
+        }
+    },
+    "require": {
+        "slim/slim": "^4.14",
+        "twig/twig": "^3.21"
+    }
+}

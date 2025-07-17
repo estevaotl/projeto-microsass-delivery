@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Nova Loja - Nuvix</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Início</a>
+    <a href="/dashboard">Painel</a>
+    <a href="/logout">Sair</a>
+  </nav>
+
+  <main class="auth-container">
+    <h2>Cadastrar Nova Loja</h2>
+
+    {% if erro %}
+      <div class="error-message">{{ erro }}</div>
+    {% endif %}
+
+    <form method="POST" action="/loja/salvar">
+      <label for="nome">Nome da loja</label>
+      <input type="text" id="nome" name="nome" required placeholder="Ex: Nuvix Store">
+
+      <label for="tipo">Tipo de loja</label>
+      <select id="tipo" name="tipo" required>
+        <option value="" disabled selected>Selecione o tipo</option>
+        {% for tipo in tipos %}
+          <option value="{{ tipo.value }}">{{ tipo.label()|capitalize }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Salvar loja</button>
+    </form>
+  </main>
+</body>
+</html>
