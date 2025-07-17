@@ -45,13 +45,14 @@ class StoreController {
 
             $nome = htmlspecialchars($nome, ENT_QUOTES, 'UTF-8');
 
-            if ($storeModel->existeLoja($nome, $tipo)) {
+            if ($storeModel->existeLoja($nome, $tipo, $_SESSION['usuario'])) {
                 throw new Exception("Já existe uma loja com o mesmo nome e tipo. Tente novamente.");
             }
 
             $success = $storeModel->create([
-                'nome' => $nome,
-                'tipo' => $tipo
+                'nome'           => $nome,
+                'tipo'           => $tipo,
+                'idProprietario' => $_SESSION['usuario']
             ]);
 
             if (!$success) {
@@ -73,7 +74,7 @@ class StoreController {
         }
 
         $storeModel = new Store();
-        $todasLojas = $storeModel->getAllStores();
+        $todasLojas = $storeModel->obterComRestricoes(array("idProprietario" => $_SESSION['usuario']));
 
         $html = $this->twig->render('auth/dashboard.twig', ['todasLojas' => $todasLojas]);
         $response->getBody()->write($html);

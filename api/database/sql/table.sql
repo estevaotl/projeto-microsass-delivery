@@ -6,13 +6,13 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-CREATE TABLE `users` (
+CREATE TABLE `stores` (
     `id` int NOT NULL AUTO_INCREMENT,
-    `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-    `senha` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-    `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    `nome` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+    `tipo` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci
+    idProprietario INT NOT NULL,
+    FOREIGN KEY (idProprietario) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
