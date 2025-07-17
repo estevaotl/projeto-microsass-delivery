@@ -1,28 +1,29 @@
 <?php
-namespace App\Controllers;
+namespace Api\Controllers;
 
-use App\Models\Store;
+use Api\Models\Store;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use App\Enums\StoreType;
 use Exception;
+use Twig\Extension\DebugExtension;
 
 class StoreController {
     private Environment $twig;
 
     public function __construct() {
-        $loader = new FilesystemLoader(__DIR__ . '/../Views');
-        $this->twig = new Environment($loader);
+        $loader = new FilesystemLoader(__DIR__ . '/../../app/Views');
+
+        $this->twig = new Environment($loader, [
+            'debug' => true
+        ]);
+
+        $this->twig->addExtension(new DebugExtension());
     }
 
     public function create(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
-        $tiposLoja = StoreType::cases(); // retorna array de objetos StoreType
-
-        $html = $this->twig->render('store/create.twig', [
-            'tipos' => $tiposLoja
-        ]);
+        $html = $this->twig->render('store/create.twig');
         $response->getBody()->write($html);
         return $response;
     }
@@ -33,9 +34,9 @@ class StoreController {
 
             // Sanitização e validação
             $nome = htmlspecialchars(trim($data['nome'] ?? ''), ENT_QUOTES, 'UTF-8');
-            $tipo = $data['tipo'] ?? '';
+            $tipo = "COMIDA";
 
-            if (!$nome || !StoreType::tryFrom($tipo)) {
+            if (!$nome) {
                 $response->getBody()->write('Dados inválidos');
                 return $response->withStatus(400);
             }
@@ -64,5 +65,18 @@ class StoreController {
             $response->getBody()->write('Erro ao salvar a loja.' . $th->getMessage());
             return $response->withStatus(500);
         }
+    }
+
+    public function dashboard(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+        if (empty($_SESSION['usuario'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+
+        $storeModel = new Store();
+        $todasLojas = $storeModel->getAllStores();
+
+        $html = $this->twig->render('auth/dashboard.twig', ['todasLojas' => $todasLojas]);
+        $response->getBody()->write($html);
+        return $response->withStatus(302);
     }
 }

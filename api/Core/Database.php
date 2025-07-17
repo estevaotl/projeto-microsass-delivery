@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace Api\Core;
 
 use PDO;
 use PDOException;
@@ -9,7 +9,7 @@ class Database {
 
     public static function getInstance(): PDO {
         if (self::$instance === null) {
-            $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../config');
+            $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../config');
             $dotenv->load();
 
             try {

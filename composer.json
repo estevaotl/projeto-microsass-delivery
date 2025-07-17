@@ -1,13 +1,22 @@
 {
-    "name": "estevao/projeto-microsass",
+    "name": "pc-quarto/projeto-microsass-delivery",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Estevao\\ProjetoMicrosass\\": "src/"
+            "PcQuarto\\ProjetoMicrosassDelivery\\": "src/",
+            "Api\\" : "api/"
         }
     },
+    "authors": [
+        {
+            "name": "Estevao Leite",
+            "email": "estevaotlnf@gmail.com"
+        }
+    ],
     "require": {
+        "twig/twig": "^3.21",
+        "slim/psr7": "^1.7",
         "slim/slim": "^4.14",
-        "twig/twig": "^3.21"
+        "vlucas/phpdotenv": "^5.6"
     }
 }

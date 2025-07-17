@@ -1,7 +1,7 @@
 <?php
-namespace App\Controllers;
+namespace Api\Controllers;
 
-use App\Models\User;
+use Api\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Environment;
@@ -11,7 +11,7 @@ class AuthController {
     private Environment $twig;
 
     public function __construct() {
-        $loader = new FilesystemLoader(__DIR__ . '/../Views');
+        $loader = new FilesystemLoader(__DIR__ . '/../../app/Views');
         $this->twig = new Environment($loader);
     }
 

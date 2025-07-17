@@ -23,14 +23,6 @@
       <label for="nome">Nome da loja</label>
       <input type="text" id="nome" name="nome" required placeholder="Ex: Nuvix Store">
 
-      <label for="tipo">Tipo de loja</label>
-      <select id="tipo" name="tipo" required>
-        <option value="" disabled selected>Selecione o tipo</option>
-        {% for tipo in tipos %}
-          <option value="{{ tipo.value }}">{{ tipo.label()|capitalize }}</option>
-        {% endfor %}
-      </select>
-
       <button type="submit">Salvar loja</button>
     </form>
   </main>

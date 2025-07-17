@@ -1,7 +1,8 @@
 <?php
-namespace App\Models;
+namespace Api\Models;
 
-use App\Core\Database;
+use Api\Core\Database;
+use PDO;
 
 class Store {
     public function create(array $data): bool {
@@ -24,6 +25,14 @@ class Store {
         ]);
 
         return $stmt->fetchColumn() > 0;
+    }
+
+    public function getAllStores(): array {
+        $pdo = Database::getInstance();
+        $sql = "SELECT * FROM stores ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

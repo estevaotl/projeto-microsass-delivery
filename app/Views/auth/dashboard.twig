@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Dashboard - Nuvix</title>
   <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/styles/dashboard/styles.css">
 </head>
 <body>
   <nav>
@@ -14,6 +15,17 @@
   <main class="dashboard">
     <h1>Bem-vindo ao seu painel, Nuvix!</h1>
     <p>Aqui você poderá gerenciar suas lojas e acompanhar tudo com agilidade.</p>
+
+    <div class="card-container">
+      {% for loja in todasLojas %}
+        <div class="card">
+          <h2>{{ loja.nome }}</h2>
+          <p>Tipo: {{ loja.tipo }}</p>
+        </div>
+      {% else %}
+        <p>Nenhuma loja cadastrada ainda.</p>
+      {% endfor %}
+    </div>
   </main>
 </body>
 </html>

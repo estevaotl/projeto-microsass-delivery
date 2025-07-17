@@ -2,15 +2,15 @@
 
 session_start();
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 use Slim\Factory\AppFactory;
-use App\Controllers\StoreController;
-use App\Controllers\AuthController;
+use Api\Controllers\StoreController;
+use Api\Controllers\AuthController;
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
@@ -22,7 +22,7 @@ $app->get('/loja/nova', [StoreController::class, 'create']);
 $app->post('/loja/salvar', [StoreController::class, 'store']);
 
 $app->get('/', function ($request, $response, $args) {
-    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../app/Views');
+    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../Views');
     $twig = new \Twig\Environment($loader);
 
     $html = $twig->render('home.twig');
@@ -39,16 +39,6 @@ $app->post('/register', [AuthController::class, 'register']);
 
 $app->get('/logout', [AuthController::class, 'logout']);
 
-$app->get('/dashboard', function ($request, $response) {
-    if (empty($_SESSION['usuario'])) {
-        return $response->withHeader('Location', '/login')->withStatus(302);
-    }
-
-    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../app/Views');
-    $twig = new \Twig\Environment($loader);
-    $html = $twig->render('auth/dashboard.twig');
-    $response->getBody()->write($html);
-    return $response;
-});
+$app->get('/dashboard', [StoreController::class, 'dashboard']);
 
 $app->run();
